@@ -27,7 +27,8 @@ function questionAnswerLine(line: {question: string, answer:string}){
         <p key={line.question}>
             <label>{line.question} </label>
             <Input/>
-            <label style={{visibility: "hidden"}}>{line.answer}</label>
+            <label >{line.answer}</label>
+            {/* <label style={{visibility: "hidden"}}>{line.answer}</label> */}
         </p>
     )
 }
@@ -36,7 +37,7 @@ function questionAnswerLine(line: {question: string, answer:string}){
 const Input = () => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
       if (event.key === 'Enter') {
-        console.log('do validate')
+        console.log('Enter Key was pressed')
         
       }
     }
