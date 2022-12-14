@@ -1,5 +1,5 @@
-import Ipv4 from "../../js/ipv4"
-import {OutputSubnetInfo, OutputIpInfo} from "../../js/ipv4"
+import Ipv4 from "./ipv4"
+import {OutputSubnetInfo, OutputIpInfo} from "./ipv4"
 
 // output
 type gameData = {
@@ -22,7 +22,7 @@ type QuestionAndAnswers = {
     answer: string
 }
 
-export function createData(){
+export function createData():gameData{
     let ip = new Ipv4
     let subnets:OutputSubnetInfo = ip.getRandomSubnet()
     // console.log(ip)

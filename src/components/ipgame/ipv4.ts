@@ -130,9 +130,6 @@ function calcNetMasks(cidr:number){
     let decimalHostMask = flipbits(decimalSubnetMask, 32)
 
     return {sub: decimalSubnetMask, host: decimalHostMask}
-
-
-
 }
 
 
@@ -147,11 +144,13 @@ function bitwiseAnd_53bit(value1:number, value2:number) {
     return (value1_highBits & value2_highBits) * maxInt32Bits + (value1_lowBits & value2_lowBits)
 }
 
+
 function getRandomIntInclusive(min:number, max:number):number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
+
 
 /** get a random PRIVATE Ipv4 Adress. (Broadcast or ) */
 function getRandomPrivateIp(){
@@ -194,7 +193,7 @@ function humanizeIp(inputInt:number):string{
             if (digit === 0){digitString = "0"}
             else{digitString = digit.toString()}
             let followingDigits = recursion(inputInt%currentChunk, (exponent-8), bitsPerChunk )
-            return  digit + "."+followingDigits
+            return  digitString + "."+followingDigits
         }
         return recursion(inputInt, (maxBits-bitsPerChunk), bitsPerChunk)          // 24 bit to get the frist 32-24 bit and then 
     }
@@ -217,5 +216,3 @@ function humanToDecimal(str:string):number{
     }
     return sum
 }
-
-
