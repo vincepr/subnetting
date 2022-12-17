@@ -15,7 +15,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <button onClick={this.handleClick}>Restart</button>
+        <button onClick={this.handleClick}>reload app</button>
         <div>{this.state.mssg}</div>
 
         <IpGame/>
