@@ -1,37 +1,40 @@
+import React from "react";
 
-
-type SubnetDataProps = {data:{
+type SubnetDataProps = {data:
+    {
     name: string
     questionAnswers: {
         question: string
         answer: string
     }[] 
-}}
+    },
+    isAnswerVisible:boolean
+}
 
 
 /** draw Subnetname and its questions -> inputbox-> answers */
-export function SubnetQuestionsAndAnswers(props:SubnetDataProps){
-    console.log()
+export const SubnetQuestionsAndAnswers = (props:SubnetDataProps) =>{
     return (
-        <div>
-            <h3>{props.data.name}:</h3>
-            {props.data.questionAnswers.map((line)=>{
-                return questionAnswerLine(line)})}
-        </div>
+            <div>
+                <h3>{props.data.name}:</h3>
+                {props.data.questionAnswers.map((line)=>{
+                    return questionAnswerLine(line, props.isAnswerVisible)})}
+            </div>
     )
 }
 
+
 /** one Row/Line of the Question an Input and the Correct Answer */
-function questionAnswerLine(line: {question: string, answer:string}){
+function questionAnswerLine(line: {question: string, answer:string}, isAnswerVisible:boolean){
     return (
         <p key={line.question}>
             <label>{line.question} </label>
             <Input/>
-            <label >{line.answer}</label>
-            {/* <label style={{visibility: "hidden"}}>{line.answer}</label> */}
+            <label style={{visibility: isAnswerVisible ? 'visible' : 'hidden'}}>{line.answer}</label>
         </p>
     )
 }
+
 
 // Input element that also handles the Enter-Key-Down-Event
 const Input = () => {

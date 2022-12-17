@@ -12,12 +12,12 @@ type gameData = {
     subnets: SubnetData[]
 }
 
-type SubnetData = {
+export type SubnetData = {
     name: string
     questionAnswers: QuestionAndAnswers[] 
 }
 
-type QuestionAndAnswers = {
+export type QuestionAndAnswers = {
     question: string
     answer: string
 }
