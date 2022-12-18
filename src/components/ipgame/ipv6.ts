@@ -19,16 +19,91 @@ export type OutputSubnetInfo = {
     newCidr : number
     maxHostsPerSubnet : number
     rngHostsPerSubnet: number
-    subnetCount: number
+        subnetCount: number
     rngSubnetCount: number
     firstSubnet: OutputIpInfo
     secondSubnet?: OutputIpInfo
     lastSubnet: OutputIpInfo
 }
 
-
+// parseInt("1234", 16)
+// .toString(16)
 
 export default class IPv6{
+    ipArray = getRandomIp()
+    ipHexa = humanizeIp(this.ipArray)
+
+
+
+
+
+}
+
+function getRandomIp() : number[] {
+    function getRandomIntInclusive(min:number, max:number):number {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min);   // The maximum is inclusive and the minimum is inclusive
+    }
+    function rngChunk(){
+        if (Math.random()<0.4){
+                return getRandomIntInclusive(0, 0xFFF)              // priorize 0 as the first hexa-digit -> or it is statistically way to unlikely.
+        }
+        else if (Math.random()<0.3){
+            return getRandomIntInclusive(0, 0xFFFF)                 // default full random range
+        }
+        return 0                                                    // priroize 0 or it is way to unlikely
+    }
+
+    // start with a "private ip block"
+    let rngIp= [0xfe00,]
+
+    if (Math.random() < 0.5){
+        for (let i of [1,2,3]){
+            rngIp.push(rngChunk())
+            
+        }
+        for (let i of [1,2,3,4]){
+            // priorize :: at the end
+            rngIp.push(0)
+        }
+    } else {
+        for (let i=0; i<7 ; i++){
+            rngIp.push(rngChunk())
+        }
+    }
+    return rngIp
+}
+
+function humanizeIp(array: number[]) : string[] {
+    let hexaIp = []
+    for (let chunk of array){
+        hexaIp.push(chunk.toString(16))
+    }
+    return hexaIp
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+class IPv4{
     // using numbers not human like "10.2.3.4" patterns for ips
     ip: number
     cidr: number
@@ -115,9 +190,9 @@ export default class IPv6{
 }
 
 
-/** cidr->4->1111000000....0 -> int */
+// cidr->4->1111000000....0 -> int 
 function calcNetMasks(cidr:number){
-    /**flip all bits for some-ammount of digits */
+    //flip all bits for some-ammount of digits 
     function flipbits(v:number, digits:number) {
         return ~v & (Math.pow(2, digits) - 1);
     }
@@ -148,14 +223,10 @@ function bitwiseAnd_53bit(value1:number, value2:number) {
 }
 
 
-function getRandomIntInclusive(min:number, max:number):number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-}
 
 
-/** get a random PRIVATE Ipv4 Adress. (Broadcast or ) */
+
+// get a random PRIVATE Ipv4 Adress. (Broadcast or ) 
 function getRandomPrivateIp(){
     // randomize with "equal" chances
     let rng = Math.random()
@@ -182,9 +253,9 @@ function getRandomPrivateIp(){
 }
 
 
-/** deicmal INT to human dottet-IP. example: 259 -> 0.0.1.3 */
+// deicmal INT to human dottet-IP. example: 259 -> 0.0.1.3 
 function humanizeIp(inputInt:number):string{
-    /** split INT into chunks of (x ammounts of bits)-Sized chunks */
+    // split INT into chunks of (x ammounts of bits)-Sized chunks 
     function splitIntoChunks(inputInt:number, maxBits = 32, bitsPerChunk = 8):string{
         function recursion(inputInt:number, exponent:number, bitsPerChunk:number):string{
             let currentChunk = Math.pow(2, exponent)
@@ -202,7 +273,7 @@ function humanizeIp(inputInt:number):string{
 }
 
 
-/** 10.0.0.0 -> 167772160  */
+// 10.0.0.0 -> 167772160  
 function humanToDecimal(str:string):number{
     if (!(typeof str === 'string')){throw "error: cant parse Ipv4-adress, no string"}
     let chunks = str.split(".")
@@ -217,3 +288,5 @@ function humanToDecimal(str:string):number{
     }
     return sum
 }
+
+*/

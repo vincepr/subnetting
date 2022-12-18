@@ -1,5 +1,6 @@
 import Ipv4 from "./ipv4"
 import {OutputSubnetInfo, OutputIpInfo} from "./ipv4"
+import Ipv6 from "./ipv6"
 
 // create a new ip & Subnet combination and only pass on relevant info for the IpGame
 
@@ -26,6 +27,9 @@ export type QuestionAndAnswers = {
 
 /** create new ramdon ipv4 & subnet data -> pass only relevant info along */
 export function createData():gameData{
+    let test = new Ipv6
+    console.log(test)
+    
     let ip = new Ipv4
     let subnets:OutputSubnetInfo = ip.getRandomSubnet()
     // console.log(ip)
