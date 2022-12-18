@@ -1,3 +1,4 @@
+// input
 type AssignmentInfo = {data:{
     ip: string;
     cidr: number;

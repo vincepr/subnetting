@@ -3,24 +3,26 @@ import './App.css';
 import { IpGame } from './components/IpGame';
 
 class App extends React.Component {
-  state = {
-    mssg: ""
-  };
+  // State to store the current game in -> overwrite it to create new instance of the game
+  state= {
+    game: ()=> <IpGame/>
+  }
+
 
   handleClick = () => {
-    // to "reload" we refresh the state
-    this.setState({ mssg: "State changed" })
+    // to "reload" we refresh the state by putting a new game-instance in it
+    this.setState({game: ()=> <IpGame/> })
   };
 
+
   render() {
+    const CurrentGameInstance = this.state.game
     return (
       <>
-        <button onClick={this.handleClick}>reload app</button>
-        <div>{this.state.mssg}</div>
-
-        <IpGame/>
+        <CurrentGameInstance/>
+        <button onClick={this.handleClick}>Next Question</button>
       </>
-    );
+    )
   }
 }
 

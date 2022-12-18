@@ -1,6 +1,8 @@
 import Ipv4 from "./ipv4"
 import {OutputSubnetInfo, OutputIpInfo} from "./ipv4"
 
+// create a new ip & Subnet combination and only pass on relevant info for the IpGame
+
 // output
 type gameData = {
     assignment: {
@@ -25,8 +27,8 @@ export type QuestionAndAnswers = {
 export function createData():gameData{
     let ip = new Ipv4
     let subnets:OutputSubnetInfo = ip.getRandomSubnet()
-    // console.log(ip)
-    // console.log(subnets)
+    console.log(ip)
+    console.log(subnets)
     let assignmentData= {
         ip: ip.info.ip,
         cidr: ip.info.cidr,
@@ -80,7 +82,7 @@ function getQuestionsAndAnswers(subnets:OutputSubnetInfo) :SubnetData[] {
     if (subnets.secondSubnet){
         subnet = {
             name: "Zweites Subnetz",
-            questionAnswers: createRowsArray(subnets.lastSubnet)
+            questionAnswers: createRowsArray(subnets.secondSubnet)
         }
         questionsData.push(subnet)
     }

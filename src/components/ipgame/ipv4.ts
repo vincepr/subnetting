@@ -1,5 +1,8 @@
+// class that holds an ipv4 and all relevant data to it. Random if no default. 
+// .getInfo() -> info regarding the ip adress.
+// .getRandomSubnet() -> creates a random subnet combination of the subnet and passes back info about it.
 
-
+// output
 export type OutputIpInfo = {
     ip: string;
     cidr: number;
@@ -82,14 +85,14 @@ export default class IPv4{
     getRandomSubnet():OutputSubnetInfo{
         let newCidr = getRandomIntInclusive(this.cidr+1, 30)
         let subnetCount = Math.pow(2, newCidr-this.cidr)
-        let rngSubnetCount = getRandomIntInclusive(Math.pow(2, newCidr-this.cidr-1),subnetCount)
+        let rngSubnetCount = getRandomIntInclusive(1+Math.pow(2, newCidr-this.cidr-1),subnetCount)
         
         let FirstSubnet = new IPv4(this.netid, newCidr)
         let SecondSubnet = new IPv4(FirstSubnet.broadcast+1 , newCidr)
         let LastSubnet = new IPv4(this.broadcast, newCidr)
 
-        let maxHosts = Math.pow(2, (32-newCidr) )-2
-        let minHosts = Math.pow(2, (32-newCidr-1) )-2
+        let maxHosts =      Math.pow(2, (32-newCidr) )-2
+        let minHosts = 1 +  Math.pow(2, (32-newCidr-1) )-2
         let rngHosts = getRandomIntInclusive(minHosts, maxHosts)
         
 
@@ -154,8 +157,6 @@ function getRandomIntInclusive(min:number, max:number):number {
 
 /** get a random PRIVATE Ipv4 Adress. (Broadcast or ) */
 function getRandomPrivateIp(){
-    
-    
     // randomize with "equal" chances
     let rng = Math.random()
     let ip
@@ -173,7 +174,7 @@ function getRandomPrivateIp(){
     // Otherwise we set it to a random possible number: (ex 8-30)
     rng = Math.random()
     if (rng<0.5){
-        ip.cidr = getRandomIntInclusive(ip.cidr, 30)
+        ip.cidr = getRandomIntInclusive(ip.cidr, 29)    	            // cidr=/29 ->2subnets-> /30 last possible subnet configuration
     }
 
     return { ip: getRandomIntInclusive(ip.min, ip.max), cidr: ip.cidr}
