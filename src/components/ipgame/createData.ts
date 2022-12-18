@@ -24,11 +24,12 @@ export type QuestionAndAnswers = {
     answer: string
 }
 
+/** create new ramdon ipv4 & subnet data -> pass only relevant info along */
 export function createData():gameData{
     let ip = new Ipv4
     let subnets:OutputSubnetInfo = ip.getRandomSubnet()
-    console.log(ip)
-    console.log(subnets)
+    // console.log(ip)
+    // console.log(subnets)
     let assignmentData= {
         ip: ip.info.ip,
         cidr: ip.info.cidr,
@@ -43,6 +44,7 @@ export function createData():gameData{
 }
 
 
+/** format questions and answers for 1th, 2nd, last subnet*/
 function getQuestionsAndAnswers(subnets:OutputSubnetInfo) :SubnetData[] {
     function createRowsArray(subnet:OutputIpInfo) :QuestionAndAnswers[] {
         return [
@@ -52,33 +54,34 @@ function getQuestionsAndAnswers(subnets:OutputSubnetInfo) :SubnetData[] {
             
             },
             {
-                question: "erster Host:",
+                question: "Erster Host:",
                 answer: subnet.firstHost
             },
             {
-                question: "letzter Host:",
+                question: "Letzter Host:",
                 answer: subnet.lastHost
 
             },
             {
-                question: "Broadcastadresse:",
+                question: "Broadcast-Adresse:",
                 answer: subnet.broadcast
             },
             {
-                question: "Subnetzmaske:",
+                question: "Subnetz-Maske:",
                 answer: subnet.subnetmask
             },
         ]
     }
+
+    // array 1 entry per subnet:
     let questionsData:SubnetData[] = []
-    // add first subnet
+    // add first subnet:
     let subnet = {
         name: "Erstes Subnetz",
         questionAnswers: createRowsArray(subnets.firstSubnet)
     }
     questionsData.push(subnet)
-  
-
+    // only add second subnet if it exists (if only 2 subnets exist -> only first and last exist)
     if (subnets.secondSubnet){
         subnet = {
             name: "Zweites Subnetz",
@@ -86,6 +89,7 @@ function getQuestionsAndAnswers(subnets:OutputSubnetInfo) :SubnetData[] {
         }
         questionsData.push(subnet)
     }
+    // add third subet:
     subnet = {
         name: "Letztes Subnetz",
         questionAnswers: createRowsArray(subnets.lastSubnet)

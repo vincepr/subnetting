@@ -44,6 +44,9 @@ function QuestionInputAnswer(line: {question: string, answer:string}, isAnswerVi
     // handle input-field change by user typing:
     function handleNewInput(event:React.ChangeEvent<HTMLInputElement>){
         let input = event.target.value
+        // repalce , to . (for quick numpad typing)
+        input = input.replace(",", ".")
+        //check if input is correct -> change state accordingly
         if (input === line.answer){
             setState({inputValue:input, isCorrectAnswer:true})
             
@@ -54,10 +57,10 @@ function QuestionInputAnswer(line: {question: string, answer:string}, isAnswerVi
 
     return (
         <p key={line.question}>
-            <label>{line.question} </label>
+            <label className="labelLeft">{line.question} </label>
             <input type="text" value={state.inputValue} onKeyDown={handleKeyDown} onChange={e => handleNewInput(e)}/>
-            <label style={{
-                color: state.isCorrectAnswer ? "black" : "red",
+            <label className="labelRight" style={{
+                color: state.isCorrectAnswer ? "black" : "#b1354c",
                 visibility: isAnswerVisible ? 'visible' : 'hidden'
                 }}>{line.answer}</label>
         </p>
