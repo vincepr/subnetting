@@ -30,13 +30,14 @@ export type OutputSubnetInfo = {
 // .toString(16)
 
 export default class IPv6{
-    ipArray = getRandomIp()
-    ipHexa = humanizeIp(this.ipArray)
-
-
-
-
-
+    ipArray : number[]
+    ipHexa : string[]
+    constructor(ip:number[]|"random" = "random"){
+        if (ip==="random"){this.ipArray = getRandomIp()}
+        else{ this.ipArray=ip}
+        this.ipHexa = humanizeIp(this.ipArray)
+        
+    }
 }
 
 function getRandomIp() : number[] {
@@ -80,11 +81,47 @@ function humanizeIp(array: number[]) : string[] {
     for (let chunk of array){
         hexaIp.push(chunk.toString(16))
     }
+    console.log(possibleCombinations(hexaIp))
+    substitutioneDoubleDotIp(hexaIp)
     return hexaIp
 }
 
+/** remove 0.0... -> :: */
+function substitutioneDoubleDotIp(hexaIp: string[]){
+    // find longest successive zeros to replace with ::
 
+}
 
+function possibleCombinations(arr: string[]){
+    let combinations = []
+    // find all combinations of concurrent chunks
+    for(let start=0; start<arr.length; start++){
+        for(let end=start+1; end<arr.length+1; end++){
+            let slice = arr.slice(start, end)
+            if(slice.length>1){combinations.push({slice:slice, start:start, end:end})}
+        }
+    }
+    // filter out all not "0" chunks
+    combinations = combinations.filter((a)=>isAllZeros(a.slice))
+    // get index of the longest array:
+    let lengths = combinations.map(a=>a.slice.length)
+    console.log(lengths)
+    // console.log(lengths.indexOf(Math.max(...lengths)))
+    // let indexMaxLength = combinations.reduce((maxI, el, i, arr)=>
+    // (el.slice.length>arr[maxI].slice.length)?i: maxI, 0)
+    // let maxLength = combinations[indexMaxLength].slice.length
+    // console.log(indexMaxLength + " "+ maxLength)
+    return combinations
+}
+
+function isAllZeros(arr:string[]){
+    let isAllZeros = true
+    arr.forEach(
+        (string)=>{
+            if(!(string==="0")){isAllZeros = false}}
+    )
+    return isAllZeros
+}
 
 
 

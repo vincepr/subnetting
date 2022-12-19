@@ -27,7 +27,7 @@ export type QuestionAndAnswers = {
 
 /** create new ramdon ipv4 & subnet data -> pass only relevant info along */
 export function createData():gameData{
-    let test = new Ipv6
+    let test = new Ipv6([15,0,0,1,2,0,0,1])
     console.log(test)
     
     let ip = new Ipv4
